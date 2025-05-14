@@ -16,7 +16,7 @@ The Covid '19 dataset was explored using SQL Server. Key insights on total cases
 The dataset explored is the "covid_19, csv" file, containing population, total cases, total deaths, total vaccinations.
 
 ### Tools
-- Excel - Extraction & Cleaning
+- Excel - Extraction & Cleaning [Download Here](https://github.com/Funke-Shittu/Data-Exploration-in-SQL/blob/main/CovidDeaths.csv)
 - SQL Server - Exploration
 
 ### Data Cleaning/Exploration
@@ -64,3 +64,6 @@ Join PortfolioProject.dbo.CovidVaccinations vac
 The exploration results are stated below; 
 1. There were more reported cases of Covid '19 than the number of deaths.
 2. The United States had the highest death count per population.
+
+🙂
+💻
