@@ -30,7 +30,7 @@ EDA involved exploring the plans_plan, savings_savingsaccount, user_customuser d
 
 ### Data Exploration
 
-####High-value customers with multiple products
+#### High-value customers with multiple products
 
 `SELECT
     u.id AS owner_id,
@@ -74,7 +74,7 @@ ORDER BY
     total_deposits DESC;`
 
 
-####Transaction frequency analysis
+#### Transaction frequency analysis
 
 `  WITH customer_tx_summary AS (
     SELECT
