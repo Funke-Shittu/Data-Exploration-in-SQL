@@ -1,4 +1,4 @@
-# Data-Exploration-in-SQL
+# Data-Exploration-in-MySQL
 
 ## Table of Contents 
 - [Project Overview](#project-overview)
@@ -26,7 +26,7 @@ In the initial data preparationn phase, the following tasks was performed;
 ### Exploratory Data Analysis
 EDA involved exploring the plans_plan, savings_savingsaccount, user_customuser datasets to answer the following questions:
 1. Customers with at least one funded savings plan AND one funded investment plan
-2. The average number of transactions per customer per month and categorizing based on: "High Frequency", "Medium Frequency", "Low Frequency"
+2. The average number of transactions per customer per month and categorizing based on: "High Frequency(>=10 transactions/month)", "Medium Frequency"(3-9 transactions/month), "Low Frequency"(<=2 transactions/month)
 
 ### Data Exploration
 
@@ -112,17 +112,10 @@ GROUP BY
 ORDER BY
     FIELD(frequency_category, 'High Frequency', 'Medium Frequency', 'Low Frequency');`
 
-
-
-
-
-
-
-
 ### Results
 The exploration results are stated below; 
-1. There were more reported cases of Covid '19 than the number of deaths.
-2. The United States had the highest death count per population.
+1.Sorting ny deposits, the customer with the highest deposits has a savings & investment count of 2388 & 1 respectively. 
+2. Customers within the "high frequency" had more average transactions/month.
 
 🙂
 💻
