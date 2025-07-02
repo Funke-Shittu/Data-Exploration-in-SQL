@@ -10,54 +10,113 @@
 - [Results](#results)
 
 ### Project Overview
-The Covid '19 dataset was explored using SQL Server. Key insights on total cases vs. total deaths, countries with highest death count per population, total population vs. vaccination and mortality across different continents was uncovered.
+The Savings & Investment data was explored using MySQL. Key insights on High-value customers with multiple products and Transaction frequency analysis was uncovered.
 
 ### Data Source
-The dataset explored is the "covid_19, csv" file, containing population, total cases, total deaths, total vaccinations.
-
-### Tools
-- Excel - Extraction & Cleaning [Download Here](https://github.com/Funke-Shittu/Data-Exploration-in-SQL/blob/main/CovidDeaths.csv)
-- SQL Server - Exploration
+The dataset explored is the "cowrywise.sql" file, containing the plans_plan, savings_savingsaccount, user_customuser & withdrawals_withdrawal tables
+- MySQL - Extraction & Cleaning [Download Here](https://github.com/Funke-Shittu/Data-Exploration-in-SQL/blob/main/CovidDeaths.csv)
+- MySQL Server - Exploration
 
 ### Data Cleaning/Exploration
 In the initial data preparationn phase, the following tasks was performed;
-1. Data extraction, loading, inspection and cleaning
-2. Splitting a dataset into two; Deaths & Vaccinations
-3. Data formatting
+1. Creating tables from the dump file
+2. Data inspection and cleaning
+3. Data Exploration
 
 ### Exploratory Data Analysis
-EDA involved exploring the Covid deaths & vaccination data to answer these questions;
-1. What is the numer of total cases vs. deaths?
-2. Which country has the highest death count per Population?
-3. Total Population vs Vaccinations?
+EDA involved exploring the plans_plan, savings_savingsaccount, user_customuser datasets to answer the following questions:
+1. Customers with at least one funded savings plan AND one funded investment plan
+2. The average number of transactions per customer per month and categorizing based on: "High Frequency", "Medium Frequency", "Low Frequency"
 
 ### Data Exploration
 
-` Total cases vs. Total deaths`
+####High-value customers with multiple products
 
-`Select Location,population, Max(total_cases) as HighestPopulationInfected, Max(total_cases/population)*100 as PercentagePopulationInfected
-From PortfolioProject.dbo.CovidDeaths
---Where location like '%states%'
-Where continent is not Null
-Group By  Location,population
-Order By PercentagePopulationInfected Desc`
+`SELECT
+    u.id AS owner_id,
+    CONCAT(u.first_name, ' ', u.last_name) AS name,
+    COALESCE(s.savings_count, 0) AS savings_count,
+    COALESCE(i.investment_count, 0) AS investment_count,
+    COALESCE(s.total_savings, 0) + COALESCE(i.total_investments, 0) AS total_deposits
+FROM
+    users_customuser u
+LEFT JOIN (
+    SELECT
+        sa.owner_id,
+        COUNT(*) AS savings_count,
+        SUM(sa.amount) AS total_savings
+    FROM
+        savings_savingsaccount sa
+    WHERE
+        sa.amount > 0
+    GROUP BY
+        sa.owner_id
+) s
+    ON u.id = s.owner_id
+LEFT JOIN (
+    SELECT
+        p.owner_id,
+        COUNT(*) AS investment_count,
+        SUM(p.amount) AS total_investments
+    FROM
+        plans_plan p
+    WHERE
+        p.amount > 0
+        AND p.plan_type_id = 2  
+    GROUP BY
+        p.owner_id
+) i
+    ON u.id = i.owner_id
+WHERE
+    s.savings_count >= 1
+    AND i.investment_count >= 1
+ORDER BY
+    total_deposits DESC;`
 
 
-`Select Location, Max(cast(total_deaths as int)) as TotalDeathCount
-From PortfolioProject.dbo.CovidDeaths
---Where location like '%states%'
-Where continent is not Null
-Group By  Location
-Order By TotalDeathCount Desc`
+####Transaction frequency analysis
 
-`Select dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations
-, SUM(CONVERT(bigint, vac.new_vaccinations)) OVER (Partition by dea.location Order by dea.location, dea.date) as RollingPeopleVaccinated
-From PortfolioProject.dbo.CovidDeaths Dea
-Join PortfolioProject.dbo.CovidVaccinations vac
-   On dea.location = vac.location
-   and dea.date = vac.date
- Where dea.continent is not null
- Order By 2,3`
+`  WITH customer_tx_summary AS (
+    SELECT
+        sa.owner_id,
+        COUNT(*) AS total_transactions,
+        COUNT(DISTINCT DATE_FORMAT(sa.transaction_date, '%Y-%m')) AS active_months,
+        COUNT(*) / COUNT(DISTINCT DATE_FORMAT(sa.transaction_date, '%Y-%m')) AS avg_tx_per_month
+    FROM
+        savings_savingsaccount sa
+    WHERE
+        sa.transaction_date IS NOT NULL
+    GROUP BY
+        sa.owner_id
+),
+categorized_customers AS (
+    SELECT
+        owner_id,
+        avg_tx_per_month,
+        CASE
+            WHEN avg_tx_per_month >= 10 THEN 'High Frequency'
+            WHEN avg_tx_per_month BETWEEN 3 AND 9 THEN 'Medium Frequency'
+            ELSE 'Low Frequency'
+        END AS frequency_category
+    FROM
+        customer_tx_summary
+)
+SELECT
+    frequency_category,
+    COUNT(*) AS customer_count,
+    ROUND(AVG(avg_tx_per_month), 1) AS avg_transactions_per_month
+FROM
+    categorized_customers
+GROUP BY
+    frequency_category
+ORDER BY
+    FIELD(frequency_category, 'High Frequency', 'Medium Frequency', 'Low Frequency');`
+
+
+
+
+
+
 
 
 ### Results
