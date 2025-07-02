@@ -26,7 +26,7 @@ In the initial data preparationn phase, the following tasks was performed;
 ### Exploratory Data Analysis
 EDA involved exploring the plans_plan, savings_savingsaccount, user_customuser datasets to answer the following questions:
 1. Customers with at least one funded savings plan AND one funded investment plan
-2. The average number of transactions per customer per month and categorizing based on: "High Frequency(>=10 transactions/month)", "Medium Frequency"(3-9 transactions/month), "Low Frequency"(<=2 transactions/month)
+2. The average number of transactions per customer per month and categorizing based on: "High Frequency(>=10 transactions/month)", "Medium Frequency(3-9 transactions/month)", "Low Frequency(<=2 transactions/month)".
 
 ### Data Exploration
 
