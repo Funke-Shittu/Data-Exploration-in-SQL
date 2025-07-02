@@ -14,8 +14,10 @@ The Savings & Investment data was explored using MySQL. Key insights on High-val
 
 ### Data Source
 The dataset explored is the "cowrywise.sql" file, containing the plans_plan, savings_savingsaccount, user_customuser & withdrawals_withdrawal tables
-- MySQL - Extraction & Cleaning [Download Here](https://github.com/Funke-Shittu/Data-Exploration-in-SQL/blob/main/CovidDeaths.csv)
-- MySQL Server - Exploration
+
+### Tools
+- MySQL - Tables Creation & Cleaning [Download Here](https://github.com/Funke-Shittu/Data-Exploration-in-SQL/blob/main/CovidDeaths.csv)
+- MySQL - Exploration
 
 ### Data Cleaning/Exploration
 In the initial data preparationn phase, the following tasks was performed;
