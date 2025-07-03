@@ -16,7 +16,7 @@ The Savings & Investment data was explored using MySQL. Key insights on High-val
 The dataset explored is the "cowrywise.sql" file, containing the plans_plan, savings_savingsaccount, user_customuser & withdrawals_withdrawal tables
 
 ### Tools
-- MySQL - Tables Creation & Cleaning [View SQL Query](Savings_Investment Data.sql)
+- MySQL - Tables Creation & Cleaning [View SQL Query](https://github.com/Funke-Shittu/Data-Exploration-in-SQL/blob/main/Savings_Investment%20Data.sql)
 - MySQL - Exploration
 
 ### Data Cleaning/Exploration
